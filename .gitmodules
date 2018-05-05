@@ -1,0 +1,3 @@
+[submodule "pdgsGUI"]
+	path = pdgsGUI
+	url = git@github.com:ulimartinez/pdgsGUI.git
