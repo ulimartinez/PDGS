@@ -12,3 +12,6 @@ class DecisionTree:
 
     def add_link(self, link):
         self.links.append(link)
+
+    def get_nodes(self):
+        return self.nodes

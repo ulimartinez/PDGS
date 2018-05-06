@@ -1,13 +1,22 @@
 from DTree import DecisionTree
+from LuaScript import LuaScript
 import sys, os, subprocess, re
 
 
 class Dissector:
-    def __init__(self):
+    def __init__(self, protocol):
         self.dtree = DecisionTree()
+        self.protocol = protocol
 
     def dissect_packet(self, packet):
         print("printing packet")
+        tshark = TShark()
+        lua = LuaScript(self.protocol)
+        script = lua.generate_script()
+        tshark.dissect_packet(packet, script)
+
+    def get_tree(self):
+        return self.dtree
 
 
 class TSharkNotFoundException(Exception):
@@ -26,7 +35,6 @@ class TShark:
 
     def find_path(self):
         possible_paths = []
-        # Windows search order: configuration file's path, common paths.
         if sys.platform.startswith('win'):
             for env in ('ProgramFiles(x86)', 'ProgramFiles'):
                 program_files = os.getenv(env)
@@ -34,7 +42,6 @@ class TShark:
                     possible_paths.append(
                         os.path.join(program_files, 'Wireshark', '%s.exe' % "tshark")
                     )
-        # Linux, etc. search order: configuration file's path, the system's path
         else:
             os_path = os.getenv(
                 'PATH',
@@ -57,4 +64,5 @@ class TShark:
     def dissect_packet(self, packet, lua_script):
         params = [self.path, "-Xlua_script:"+lua_script, "-r", packet]
         out = self.run_command(params, stderr=None).decode("ascii")
+        print(out)
 
