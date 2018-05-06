@@ -4,6 +4,9 @@ class Construct:
         self.y = 0
         self.expanded = True
         self.type = node_type
+        self.parent = None
+        self.l_child = None
+        self.r_child = None
 
 
 class StartConstruct(Construct):
