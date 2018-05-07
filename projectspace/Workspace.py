@@ -47,6 +47,7 @@ def new_workspace(name, save_path):
             created_workspace = Workspace(name, save_path)
             c_workspace = created_workspace.get_name()
 
+
         except OSError as e:
             print('Workspace name already exists: Workspace not created.')
 
