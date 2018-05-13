@@ -1,4 +1,5 @@
-from builder.Dissector import Dissector
+from Dissector import Dissector
+from PCAP import PCAP
 
 
 class Protocol:
@@ -9,6 +10,5 @@ class Protocol:
     def get_dissector(self):
         return self.dissector
 
-
-proto = Protocol("Awesome")
-proto.get_dissector().dissect_packet("packet.pcap")
+    def getPackets(self, fileName):
+        self.pcap = PCAP(fileName).getPackets()

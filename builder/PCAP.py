@@ -3,12 +3,14 @@ import pdb
 import sys, os, subprocess, re
 
 class PCAP:
-    def __init__(self):
+    def __init__(self, fileName):
         self.tshark = TShark()
+        self.fileName = fileName
+        self.readCaptureFile()
 
 
-    def readCaptureFile(self, fileName):
-        params = [self.tshark.find_path(), "-r"+fileName]
+    def readCaptureFile(self):
+        params = [self.tshark.find_path(), "-r"+self.fileName]
         self.capture = self.tshark.run_command(params, stderr=None)
 
 
