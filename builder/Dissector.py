@@ -27,7 +27,6 @@ class TShark:
     def __init__(self):
         self.path = self.find_path()
 
-
     def run_command(self, *popenargs, **kwargs):
         process = subprocess.Popen(stdout=subprocess.PIPE, *popenargs, **kwargs)
         output, unused_err = process.communicate()
@@ -63,6 +62,10 @@ class TShark:
 
     def dissect_packet(self, packet, lua_script):
         params = [self.path, "-Xlua_script:"+lua_script, "-r", packet]
+        print(params)
         out = self.run_command(params, stderr=None).decode("ascii")
         print(out)
+
+    def get_match(self, packet, lua_script):
+        self.dissect_packet(packet, lua_script)
 

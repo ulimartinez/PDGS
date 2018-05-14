@@ -3,8 +3,8 @@ from Construct import StartConstruct
 
 class DecisionTree:
     def __init__(self):
-        self.root = StartConstruct()
-        self.nodes = [self.root]
+        self.root = None
+        self.nodes = []
         self.links = []
 
     def add_construct(self, construct):
@@ -12,6 +12,3 @@ class DecisionTree:
 
     def add_link(self, link):
         self.links.append(link)
-
-    def get_nodes(self):
-        return self.nodes

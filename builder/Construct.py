@@ -12,6 +12,8 @@ class Construct:
 class StartConstruct(Construct):
     def __init__(self):
         Construct.__init__(self, "start")
+        self.dependency = None
+        self.pattern = None
 
 
 class EndConstruct(Construct):
