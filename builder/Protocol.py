@@ -2,6 +2,8 @@ from builder.Dissector import Dissector
 from field.Field import Field
 from builder.Construct import *
 from LuaScript import LuaScript
+from Dissector import Dissector
+from PCAP import PCAP
 
 
 class Protocol:
@@ -11,6 +13,9 @@ class Protocol:
 
     def get_dissector(self):
         return self.dissector
+
+    def getPackets(self, fileName):
+        self.pcap = PCAP(fileName).getPackets()
 
 
 # TEST DRIVER CODE
