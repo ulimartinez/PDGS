@@ -29,6 +29,7 @@ class Workspace:
         return self.listProjects
 
     def addProjectToList(self,project):
+        projec.set_path(os.path.join(self.path, project.get_name()".xml"))
         self.listProjects.append(project)
         self.listProjects.sort()
 
@@ -40,14 +41,11 @@ def new_workspace(name, save_path):
     # Check if path exists
     if verify_path(save_path):
         # Set directory at save_path
-        os.chdir(save_path)
         try:
             # If workspace name doesn't exists create new workspace
             os.makedirs(name, 1)
             created_workspace = Workspace(name, save_path)
-            c_workspace = created_workspace.get_name()
-
-
+            
         except OSError as e:
             print('Workspace name already exists: Workspace not created.')
 
@@ -56,3 +54,4 @@ def new_workspace(name, save_path):
 def verify_path(path):
     if os.path.exists(path):
         return 1
+
