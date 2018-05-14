@@ -27,6 +27,7 @@ class LuaScript:
                 )
                 fields.append(lower_field)
         script += '{}.fields = '.format(proto_id) + "{" + ",".join(fields) + "}\n"
+
         # generate dissector function
         script += 'function {}.dissector(buffer,pinfo,tree)\n'.format(proto_id)
         script += '\tpinfo.cols.protocol = "{}"\n'.format(lower_proto_name.upper())
