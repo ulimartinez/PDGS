@@ -1,5 +1,3 @@
-from Construct import StartConstruct
-
 
 class DecisionTree:
     def __init__(self):
@@ -12,3 +10,9 @@ class DecisionTree:
 
     def add_link(self, link):
         self.links.append(link)
+
+    def find_node(self, id):
+        for node in self.nodes:
+            if node.i == id:
+                return node
+        return None
