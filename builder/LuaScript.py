@@ -40,7 +40,8 @@ class LuaScript:
                 lower_f = self._get_lower(c.name)
                 script += '\tsubtree:add(f_{}, buffer({}, {}))\n'.format(lower_f, location, c.size)
                 location += c.size
-        script += "end\n"
+            elif isinstance(c, EndConstruct):
+                script += "end\n"
 
         # add dependency info
         start_field = self.dtree.nodes[0]

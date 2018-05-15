@@ -54,7 +54,7 @@ class ExpressionConstruct(Construct):
 
 
 class ConnectorConstruct(Construct):
-    def __init__(self, src, dest):
+    def __init__(self, src=None, dest=None):
         Construct.__init__(self, "connector")
         self.src = src
         self.dest = dest
