@@ -16,10 +16,10 @@ class Dissector:
         script = lua.generate_script()
         tshark.dissect_packet(packet, script)
 
-    def get_packets(self, packet="icmp.pcap"):
+    def get_packets(self, pcap="icmp.pcap"):
         lua = LuaScript(self.protocol)
         script = lua.generate_script()
-        return self.tshark.dissect_packet(packet, script)
+        return self.tshark.get_packets(pcap, script)
 
     def get_tree(self):
         return self.dtree
@@ -75,7 +75,7 @@ class TShark:
     def get_packets(self, packet, lua_script):
         params = [self.path, "-Xlua_script:" + lua_script, "-r", packet]
         print(params)
-        out = self.run_command(params, stderr=None).decode("ascii")
+        out = self.run_command(params, stderr=None)
         return out
 
     def get_match(self, packet, lua_script):
