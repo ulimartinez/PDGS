@@ -3,7 +3,7 @@ from xml.etree.ElementTree import ElementTree
 from xml.etree.ElementTree import Element
 import xml.etree.ElementTree as ET
 from XML_Project_Format import *
-from Workspace import Workspace
+from Workspace import *
 
 
 # Class Project collaborates with GUI and LUA script
@@ -85,7 +85,8 @@ def load_project(xml_project):  # TODO untested needs gui
 # saves project as XML
 # @\REQUIRES collaboration with layout & protocol to continue
 # @\ensures (new)project state is saved
-def save_project(project):
+def save_project(workspace, project):
+
     project_name = project.get_name()
     project_path = project.get_path()
     project_protocol = project.get_protocol()
@@ -100,12 +101,14 @@ def save_project(project):
 
     try:
         #   Change path
-        verify_path(project_path)
-        os.chdir(project_path)
+        wrk_path = os.path.join(workspace.get_path(), workspace.get_name())
+        verify_path(wrk_path)
+        os.chdir(wrk_path)
+        workspace.addProjectToList(project)
 
         try:
             #   Create dis.xml file in save_path
-            file = open('project_name.xml', "w")
+            # file = open('project_name.xml', "w")
 
             # Project XML
             project_root = Element('project')
@@ -193,26 +196,3 @@ def export_lua_dissector(xml_project, save_path):  # not working / take in proje
 def verify_path(path):
     if os.path.exists(path):
         return 1
-
-
-def main():
-    print "\n"
-    # testing
-
-    # save_path = r"C:\Users\luui9\Desktop\test"  # annoying path requires char 'r' before string
-    # dis = r"C:\Users\*HOMEDIR*\Desktop\test\new_project555"
-    xml_file = r"C:\Users\luui9\Desktop\test\test_project.xml"
-    # new_project1 = Project("23456789", save_path, "protocool1", "layout2", "description3")  # works
-    # new_project2("name2", save_path, "description")
-    # save_project(new_project1)
-    # export_lua_dissector(new_project, path1)
-    # open_project("test.txt") # untested with project
-    # ts on gui
-    # data = r"C:\Users\*HOMEDIR*\PycharmProjects\Projectspace_Subsystem\data\xml_file.xml"
-    # load_project(data)
-    # export_lua_dissector(data, path1)
-
-    # load_project(xml_file)
-
-if __name__ == "__main__":
-    main()
