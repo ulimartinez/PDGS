@@ -9,12 +9,16 @@ class Dissector:
         self.protocol = protocol
         self.tshark = TShark()
 
-    def dissect_packet(self, packet):
-        print("printing packet")
+    def dissect_packet(self, pcap="icpm.pcap"):
         tshark = TShark()
         lua = LuaScript(self.protocol)
         script = lua.generate_script()
-        tshark.dissect_packet(packet, script)
+        fields = self.protocol.dissector.dtree.get_fields()
+        valid_fields = []
+        for f in fields:
+            valid_fields.append("{}.{}".format(self.protocol.name.lower(), f))
+        f_string = " ".join(valid_fields)
+        return tshark.dissect_packet(pcap, script, f_string)
 
     def get_packets(self, pcap="icmp.pcap"):
         lua = LuaScript(self.protocol)
@@ -66,11 +70,11 @@ class TShark:
         match = re.match('.*\s(\d+\.\d+\.\d+).*', first_line)
         return match.groups()[0]
 
-    def dissect_packet(self, packet, lua_script):
-        params = [self.path, "-Xlua_script:"+lua_script, "-r", packet]
+    def dissect_packet(self, packet, lua_script, fields):
+        params = [self.path, "-Xlua_script:"+lua_script, "-r", packet, "-T", "fields", "-e", fields]
         print(params)
-        out = self.run_command(params, stderr=None).decode("ascii")
-        print(out)
+        out = self.run_command(params, stderr=None)
+        return out
 
     def get_packets(self, packet, lua_script):
         params = [self.path, "-Xlua_script:" + lua_script, "-r", packet]
