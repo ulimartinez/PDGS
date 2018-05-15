@@ -1,13 +1,13 @@
 from builder.Construct import Construct
 
 
-class Field(Construct):
+class FieldConstruct(Construct):
     size_map = {
         "UINT8": 1,
         "UINT16": 2
     }
 
-    def __init__(self, name):
+    def __init__(self, name=""):
         Construct.__init__(self, "field")
         self.name = name
         self.abbreviation = None
@@ -22,8 +22,8 @@ class Field(Construct):
 
     def set_type(self, dtype):
         self.data_type = dtype
-        if dtype in Field.size_map:
-            self.size = Field.size_map[dtype]
+        if dtype in FieldConstruct.size_map:
+            self.size = FieldConstruct.size_map[dtype]
 
 
 class ReferenceList(Construct):

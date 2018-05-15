@@ -1,5 +1,5 @@
 from builder.Construct import *
-from field.Field import Field
+from field.Field import FieldConstruct
 import re
 
 
@@ -19,7 +19,7 @@ class LuaScript:
         # generate fields
         fields = []
         for c in self.dtree.nodes:
-            if isinstance(c, Field):
+            if isinstance(c, FieldConstruct):
 
                 lower_field = self._get_lower("f " + c.name)
                 script += '{} = ProtoField.new("{}", "{}.{}", ftypes.{})\n'.format(
@@ -36,7 +36,7 @@ class LuaScript:
         # add fields to subtree
         location = 0
         for c in self.dtree.nodes:
-            if isinstance(c, Field):
+            if isinstance(c, FieldConstruct):
                 lower_f = self._get_lower(c.name)
                 script += '\tsubtree:add(f_{}, buffer({}, {}))\n'.format(lower_f, location, c.size)
                 location += c.size
