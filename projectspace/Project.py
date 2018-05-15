@@ -3,6 +3,7 @@ from xml.etree.ElementTree import ElementTree
 from xml.etree.ElementTree import Element
 import xml.etree.ElementTree as ET
 from XML_Project_Format import *
+from Workspace import Workspace
 
 
 # Class Project collaborates with GUI and LUA script
@@ -56,22 +57,14 @@ class Project:
 def create_new_project(name, save_path, description):
     # Check if path exists
     try:
-        verify_path(save_path)
-        os.chdir(save_path)
-        try:
-            # If project dne create new project
-            os.makedirs(name, 1)  # Create directory at specified path
-            new_project = Project(name, save_path, "protocol", "layout", description)
+        new_project = Project(name, save_path, "protocol", "layout", description)
 
-            #
-            #   TODO Load new project onto canvas(empty)
-            #
-
-        except OSError as e:
-            print('Directory already exists: Directory not created.')
+        #
+        #   TODO Load new project onto canvas(empty)
+        #
 
     except OSError as e:
-        print('Path not found')
+        print('Directory already exists: Directory not created.')
 
 
 # Loads existing xml_project

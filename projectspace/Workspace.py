@@ -1,5 +1,5 @@
 import os
-
+from Project import *
 
 # Class Workspace collaborates with GUI
 # Displays project name and its specific protocol.
@@ -29,7 +29,7 @@ class Workspace:
         return self.listProjects
 
     def addProjectToList(self,project):
-        project.set_path(os.path.join(self.path, project.get_name()".xml"))
+        project.set_path(os.path.join(self.path, project.get_name()+".xml"))
         self.listProjects.append(project)
         self.listProjects.sort()
 
